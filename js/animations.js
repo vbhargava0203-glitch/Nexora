@@ -1,0 +1,5 @@
+/* Lightweight motion helpers with reduced-motion support. */
+window.Nexora=window.Nexora||{};
+Nexora.toast=(message,type='success')=>{const region=document.querySelector('#toast-region'),el=document.createElement('div');el.className=`toast ${type}`;el.innerHTML=`<span class="toast-icon">${type==='error'?'×':type==='warning'?'!':'✓'}</span><span>${message}</span>`;region.append(el);setTimeout(()=>{el.style.opacity='0';el.style.transform='translateX(18px)';setTimeout(()=>el.remove(),250)},3200)};
+Nexora.observeReveals=()=>{const nodes=document.querySelectorAll('.reveal:not(.observed)');if(!('IntersectionObserver'in window)){nodes.forEach(n=>n.classList.add('visible'));return}const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.12});nodes.forEach(n=>{n.classList.add('observed');io.observe(n)})};
+Nexora.escape=(s='')=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
